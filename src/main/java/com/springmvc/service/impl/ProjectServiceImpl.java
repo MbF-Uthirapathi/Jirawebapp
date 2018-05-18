@@ -1,24 +1,24 @@
 package com.springmvc.service.impl;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
+import javax.ws.rs.core.MediaType;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.springmvc.model.JiraRequest;
-import com.springmvc.model.JiraUser;
+import com.springmvc.model.JiraProjectUsers;
 import com.springmvc.model.Project;
 import com.springmvc.repository.JiraUserRepository;
 import com.springmvc.repository.ProjectRepository;
 import com.springmvc.service.ProjectService;
 import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
@@ -29,14 +29,8 @@ public class ProjectServiceImpl implements ProjectService {
     private ProjectRepository projectRepository;
     @Resource
     private JiraUserRepository jiraUserRepository;
-
-    private static String URL;
-    private static String USERNAME;
-    private static String PASSWORD;
-   
-
+    
     @Override
-
     public Project create(Project user) {
         Project createdUser = user;
         return projectRepository.save(createdUser);
@@ -45,7 +39,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     @Transactional
     public List<Project> findAll() {
-
+    	System.err.println("find method...");
         return projectRepository.findAll();
     }
 
@@ -66,53 +60,29 @@ public class ProjectServiceImpl implements ProjectService {
         return projectRepository.save(proUser);
     }
 
-    @Override
-    public List<String> findIssue(JiraRequest user) throws UnsupportedEncodingException {
+	@Override
+	public List<String> getProjectNames() {
+		List<Project> pr = projectRepository.findByProjectStatus("ACTIVE");
+		List<String> projects = new ArrayList<>();
+		pr.forEach(p->{
+			projects.add(p.getJiraProjectName());
+		});
+		return projects;
+	}
 
-        String jsonResponse = null;
-        WebResource webResource = null;
-        ClientResponse response = null;
-        String ecodedValue1=null;
-        String fromDate = user.getFromDate();
-        String toDate = user.getToDate();
-        String ASSIGNEE =user.getAssignName();
-        Client client = Client.create();
-
-        List<String> json = new ArrayList<String>();
-
-        List<Project> projectDetails1 = projectRepository.findAll();
-        List<JiraUser> jiraUser= jiraUserRepository.findAll();
-        for (Project jira1 : projectDetails1) {
-          /*  for (JiraUser listUser : jiraUser){
-                
-                ASSIGNEE=listUser.getAssigneeName();
-                PROJECTNAME = listUser.getProjectName();
-                System.err.println(PROJECTNAME+ASSIGNEE);*/
-            
-            USERNAME = jira1.getEmail();
-            PASSWORD = jira1.getPassword();
-            URL = jira1.getUrl();
-           
-            client.addFilter(new HTTPBasicAuthFilter(USERNAME, PASSWORD));
-            String url = " >= " + fromDate + " " + "AND" + " " + "created" + " <= " + toDate + " " + "AND assignee ="
-                    + ASSIGNEE;
-            ecodedValue1 = URLEncoder.encode(url, StandardCharsets.UTF_8.name());
-            webResource = client.resource(URL + "rest/api/2/search?filter&jql=" + "created" + ecodedValue1
-                    + "&fields=worklog,timetracking,summary,assignee.timespent,aggregatetimeoriginalestimate,timeoriginalestimate,assignee,timespent,status,project,issuetype");
-            response = webResource.type("application/json").accept("application/json").get(ClientResponse.class);
-            System.err.println(response);
-            client.destroy();
-            jsonResponse = response.getEntity(String.class);
-            json.add(jsonResponse);
-
-          /*  }*/
-        }
-
-
-        
-        /*
-         * }
-         */
-        return json;
-    }
+	@Override
+	public Set<String> getJiraUsers(List<String> projectList) {
+		Set<String> userNames = new HashSet<>();
+		List<Project> projects = projectRepository.findByProjectNameIn(projectList);
+		Client client = Client.create();
+		projects.forEach(p->{
+			client.addFilter(new HTTPBasicAuthFilter(p.getEmail(), p.getPassword()));
+			WebResource web = client.resource(p.getUrl()+"/rest/api/latest/user/search?username=%25");
+			JiraProjectUsers[] response = web.accept(MediaType.APPLICATION_JSON_TYPE).get(JiraProjectUsers[].class);
+			List<JiraProjectUsers> list = Arrays.asList(response);
+			userNames.addAll(list.stream().map(JiraProjectUsers :: getName).collect(Collectors.toList()));
+		});
+		client.destroy();
+		return userNames;
+	}
 }

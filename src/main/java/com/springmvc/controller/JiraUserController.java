@@ -94,13 +94,6 @@ public class JiraUserController {
         redirectAttributes.addFlashAttribute("message", message);
         return mav;
     }
-
-    @RequestMapping(value = "/issueJsp")
-    public ModelAndView browser() {
-        ModelAndView mav = new ModelAndView("jiraIssue");
-        return mav;
-    }
-
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @RequestMapping(value = "/issueissue", method = RequestMethod.POST)

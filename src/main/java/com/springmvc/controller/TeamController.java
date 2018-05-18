@@ -1,5 +1,7 @@
 package com.springmvc.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -12,14 +14,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.springmvc.model.Project;
 import com.springmvc.model.Team;
+import com.springmvc.service.ProjectService;
 import com.springmvc.service.TeamService;
 
 @Controller
 public class TeamController {
     @Autowired
     private TeamService teamService;
-
+    
     @RequestMapping(value = "/team", method = RequestMethod.GET)
     public ModelAndView newteamPage() {
         ModelAndView mav = new ModelAndView("team", "team", new Team());
@@ -31,6 +35,7 @@ public class TeamController {
         ModelAndView mav = new ModelAndView();
         String message = "New team  " + team.getTeamLoginName() + " " + team.getTeamName()
                 + " was successfully created.";
+        System.err.println("........."+message);
         teamService.createTeam(team);
         mav.setViewName("redirect:/home");
         redirectAttributes.addFlashAttribute("message", message);
@@ -55,6 +60,7 @@ public class TeamController {
             mav = new ModelAndView("redirect:/Success");
             mav.addObject("teamName", user.getTeamName());
         } else {
+        	System.err.println("........error");
             mav = new ModelAndView("redirect:/home");
             mav.addObject("message", "Username or Password is wrong!!");
         }
@@ -68,7 +74,7 @@ public class TeamController {
 
     @RequestMapping("/home")
     public String view() {
-        return "home";
+        return "loginError";
     }
 
 }

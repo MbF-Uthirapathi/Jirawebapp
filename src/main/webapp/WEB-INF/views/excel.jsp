@@ -117,7 +117,8 @@ footer {
 			<ul class="nav navbar-nav">
 				<li><a href="${pageContext.request.contextPath}/project">Home</a></li>
 								<li><a href="${pageContext.request.contextPath}/issueJsp">Issue</a></li>
-				
+								<li id="projectsInfo"><a href="${pageContext.request.contextPath}
+										/projectsInfoJsp">ProjectsInfo</a></li>
 								<li><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
 				
 			</ul>

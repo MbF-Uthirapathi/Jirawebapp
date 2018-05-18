@@ -44,7 +44,16 @@
 						style="width: 25%" />
 					<form:errors path="jiraProjectName" cssStyle="color: red;" />
 				</div>
-
+				
+				<div class="form-group">
+					<label for="projectStatus">Project Status:</label>
+					<form:select path="projectStatus" class="form-control" style="width: 25%" >
+						<form:option value="ACTIVE" label="ACTIVE" />
+				  <form:option value="INACTIVE" label="INACTIVE" />
+					</form:select>
+					<form:errors path="jiraProjectName" cssStyle="color: red;" />
+				</div>
+				
 				<button type="submit" class="btn btn-default">Update</button>
 				<button type="reset" class="btn btn-default">Reset</button>
 				<button type="submit" class="btn btn-default">

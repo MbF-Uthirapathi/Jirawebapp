@@ -28,5 +28,7 @@ public class Project {
     private String password;
     
     private String jiraProjectName;
+    
+    private String projectStatus;
    
 }

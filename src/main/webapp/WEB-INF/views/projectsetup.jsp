@@ -1,3 +1,4 @@
+<%@page import="java.sql.*"%>
 <%@page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -44,6 +45,16 @@
 						style="width: 25%" />
 					<form:errors path="jiraProjectName" cssStyle="color: red;" />
 				</div>
+				
+				<div class="form-group">
+					<label for="projectStatus">Project Status:</label>
+					<form:select path="projectStatus" class="form-control" style="width: 25%" >
+						<form:option value="ACTIVE" label="ACTIVE" />
+				  <form:option value="INACTIVE" label="INACTIVE" />
+					</form:select>
+					<form:errors path="jiraProjectName" cssStyle="color: red;" />
+				</div>
+				
 				<%-- <div>
 					<label for="employee.userId">UserName:</label> <br> <select
 						id="employee.userId" name="employee.userId">
@@ -64,7 +75,7 @@
 			</form:form>
 			<div id="demo_pag1">
 							<h4>List of Projects</h4>
-
+				
 				<table id="example" class="table">
 					<thead>
 						<tr>
@@ -72,6 +83,7 @@
 							<th>JIRA-Url</th>
 							<th>Email-Id</th>
 							<th>JIRA ProjectName</th>
+							<th>Action</th>
 							<th>Action</th>
 							<th>Action</th>
 						</tr>
@@ -88,6 +100,9 @@
 								</td>
 								<td><a
 									href="${pageContext.request.contextPath}/projectDelete/${user.projectId}">Delete</a>
+								</td>
+								<td><a
+									href="${pageContext.request.contextPath}/pullAllSprints/${user.projectId}">PullAllSprints</a>
 								</td>
 							</tr>
 						</c:forEach>

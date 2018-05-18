@@ -1,3 +1,5 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,70 +21,70 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-	<script src="https://code.jquery.com/jquery-1.12.3.js"></script>
-	<script
-		src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-	<link rel="stylesheet" type="text/css"
-		href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css"></link>
-		
-	<!-- <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"> 
- <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script> --> 
-<style>
+<script src="https://code.jquery.com/jquery-1.12.3.js"></script>
+<script
+	src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css"></link>
 
+<!-- <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"> 
+ <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script> -->
+<style>
 
 /* The Modal (background) */
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-    padding-top: 60px;
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0, 0, 0); /* Fallback color */
+	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+	padding-top: 60px;
 }
 
 /* Modal Content/Box */
 .modal-content {
-    background-color: #fefefe;
-    margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
-    border: 1px solid #888;
-    width: 40%; /* Could be more or less, depending on screen size */
+	background-color: #fefefe;
+	margin: 5% auto 15% auto;
+	/* 5% from the top, 15% from the bottom and centered */
+	border: 1px solid #888;
+	width: 40%; /* Could be more or less, depending on screen size */
 }
 
 /* The Close Button (x) */
 .close {
-    position: absolute;
-    right: 35px;
-    top: 15px;
-    color: #000;
-    font-size: 40px;
-    font-weight: bold;
+	position: absolute;
+	right: 35px;
+	top: 15px;
+	color: #000;
+	font-size: 40px;
+	font-weight: bold;
 }
 
-.close:hover,
-.close:focus {
-    color: red;
-    cursor: pointer;
+.close:hover, .close:focus {
+	color: red;
+	cursor: pointer;
 }
 
 /* Clear floats */
 .clearfix::after {
-    content: "";
-    clear: both;
-    display: table;
+	content: "";
+	clear: both;
+	display: table;
 }
 
 /* Change styles for cancel button and signup button on extra small screens */
 @media screen and (max-width: 300px) {
-    .cancelbtn, .signupbtn {
-       width: 100%;
-    }
+	.cancelbtn, .signupbtn {
+		width: 100%;
+	}
 }
+
 html, body {
 	overflow-x: hidden;
 }
@@ -210,9 +212,10 @@ footer {
 						class="icon-bar"></span>
 				</button>
 				<ul class="nav navbar-nav">
-				<%-- <li><a href="${pageContext.request.contextPath}/frame">Project
+					<%-- <li><a href="${pageContext.request.contextPath}/frame">Project
 							 </a></li> --%>
-					<li id="project"><a href="${pageContext.request.contextPath}/project">Project
+					<li id="project"><a
+						href="${pageContext.request.contextPath}/project">Project
 							Create </a></li>
 					<%-- <li><a href="${pageContext.request.contextPath}/projectList">List Project
 							</a></li>
@@ -224,7 +227,16 @@ footer {
 							New User</a></li>
 					<li><a href="${pageContext.request.contextPath}/list">List
 							Users</a></li> --%>
-					<li id="issue"><a href="${pageContext.request.contextPath}/issueJsp">Issue</a></li>
+					<li id="issue"><a
+						href="${pageContext.request.contextPath}/issueJsp">Issue</a></li>
+
+					<li id="projectsInfo"><a
+						href="${pageContext.request.contextPath}
+								/projectsInfoJsp">ProjectsInfo</a></li>
+					<li id="issueFilter"><a
+						href="${pageContext.request.contextPath}
+								/issueFilterJsp">IssueFilter</a></li>
+
 				</ul>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
@@ -236,7 +248,8 @@ footer {
 					<button type="submit" class="btn btn-success">Search</button> -->
 				</form>
 				<ul class="nav navbar-nav">
-					<li id="logout"><a href="${pageContext.request.contextPath}/logout">logout</a></li>
+					<li id="logout"><a
+						href="${pageContext.request.contextPath}/logout">logout</a></li>
 				</ul>
 			</div>
 		</div>

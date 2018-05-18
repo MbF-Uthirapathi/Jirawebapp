@@ -1,18 +1,11 @@
 package com.springmvc.controller;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.springmvc.model.JiraRequest;
 import com.springmvc.model.Project;
 import com.springmvc.service.ProjectService;
 
@@ -42,11 +34,13 @@ public class ProjectController {
     public @ResponseBody ModelAndView addUser(@ModelAttribute Project user,
             final RedirectAttributes redirectAttributes) {
         ModelAndView mav = new ModelAndView("projectsetup", "user", new Project());
-
+        System.out.println("Project Status ...."+user.getProjectStatus());
         String message = "New user " + user.getProjectName() + " " + " was successfully created.";
         projectService.create(user);
+        System.out.println("........"+message);
         List<Project> userList = projectService.findAll();
         mav.addObject("userList", userList);
+        mav.addObject("message", message);
         /*
          * mav.setViewName("redirect:/projectList");
          */ redirectAttributes.addFlashAttribute("message", message);
@@ -92,14 +86,5 @@ public class ProjectController {
         String message = "User " + user.getProjectName() + " was successfully deleted.";
         redirectAttributes.addFlashAttribute("message", message);
         return mav;
-    }
-    
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    @RequestMapping(value = "/issue", method = RequestMethod.POST)
-    public ModelAndView listIssue(JiraRequest user, Model model,HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
-/*       HttpSession session = request.getSession();
-*/        model.addAttribute("jsonList", projectService.findIssue(user));
-        return new ModelAndView("excel");
     }
 }

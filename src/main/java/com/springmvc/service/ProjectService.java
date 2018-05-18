@@ -1,11 +1,8 @@
 package com.springmvc.service;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Set;
 
-import javax.servlet.http.HttpSession;
-
-import com.springmvc.model.JiraRequest;
 import com.springmvc.model.Project;
 
 public interface ProjectService{
@@ -14,14 +11,13 @@ public interface ProjectService{
 
     List<Project> findAll();
 
-
     Project update(Project proUser);
-
 
     Project findById(int projectId);
 
     Project delete(int projectId);
 
-    List<String> findIssue(JiraRequest user) throws UnsupportedEncodingException;
+	List<String> getProjectNames();
 
+	Set<String> getJiraUsers(List<String> projectList);
 }
