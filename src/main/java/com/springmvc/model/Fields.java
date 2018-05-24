@@ -23,4 +23,7 @@ public class Fields {
 	private SprintStatus status;
 	@JsonProperty("subtasks")
 	private List<Subtask> subtasks;
+	@JsonProperty("timetracking")
+	private TimeTracking timeTracking;
+	
 }

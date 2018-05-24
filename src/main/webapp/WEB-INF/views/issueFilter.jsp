@@ -24,16 +24,28 @@
 					<input id="toDate" type="date" name="toDate" style="width: 15%">
 					<br><br>
 					<label>Projects:</label><br>
+					
 					<c:if test="${not empty projectNames}">
-						<form:checkboxes items="${projectNames}" path="projectName"
-							name="projectName"  />
-						<br>
+					 <c:forEach items="${projectNames}" var="projectName" >
+					 <table>	
+					 <tr>
+		             	<td><input type="checkbox" name="projectName" value="${projectName}">${projectName}</td>
+		             </tr>
+		             </table>
+		            </c:forEach>
 					</c:if><br>
-					<label>Assignees:</label><br>
-					<c:if test="${not empty usersNames}">
-						<form:checkboxes items="${usersNames}" path="assignee"
-							name="assignee" />
-						<br>
+					
+					<label>Assignees:</label><br><br>	
+					
+					<c:if test="${not empty usersNames}">					
+					<c:forEach items="${usersNames}" var="assignee" >
+					<table>
+					<tr>
+		             	<td><input type="checkbox" name="assignee" value="${assignee}">${assignee}</td>
+		            </tr>
+		            </table>					    
+					</c:forEach>
+				
 					</c:if>
 				</div>
 				<br>

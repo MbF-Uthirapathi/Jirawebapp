@@ -15,4 +15,8 @@ public class Assignee {
 	private String assigneename;
 	@JsonProperty("displayName")
 	private String displayName;
+	
+	@JsonProperty("emailAddress")
+	private String assigneeEmailAddress;
+	
 }

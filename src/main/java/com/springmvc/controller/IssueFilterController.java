@@ -42,7 +42,9 @@ public class IssueFilterController {
     public ModelAndView listIssue(IssueFilter user, Model model,HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 		System.err.println(".........."+user.getFromDate());
 		user.getProjectName().forEach(p->System.out.println("inputs---->"+p));
+		user.getAssignee().forEach(a->System.out.println("inputs---->"+a));
+		System.out.println("inputs---->"+user.getAssignee().size());
 		model.addAttribute("result", issueFilterService.getIssuesWithStatus(user));
-        return new ModelAndView("excel");
+        return new ModelAndView("issueFilterList");
     }
 }

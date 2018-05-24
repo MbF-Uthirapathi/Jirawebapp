@@ -16,4 +16,8 @@ public class Issue {
 	
 	@JsonProperty("fields")
 	private Fields fields;
+	
+	@JsonProperty("summary")
+	private String summary;
+	
 }
