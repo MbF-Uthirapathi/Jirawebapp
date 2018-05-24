@@ -58,19 +58,19 @@ public class ProjectInfoServiceImpl implements ProjectInfoService{
 	    			ProjectInfo pi = new ProjectInfo();
 	    			
 	    			long toDoCount = issuesList.getIssues().stream().filter(p->p.getFields().
-	    					getStatus().getSprintStatusName().equals("To Do")).count();
+	    					getStatus().getIssueStatusName().equals("To Do")).count();
 	    			long inProgressCount = issuesList.getIssues().stream().filter(p->p.getFields().
-	    					getStatus().getSprintStatusName().equals("In Progress")).count();
+	    					getStatus().getIssueStatusName().equals("In Progress")).count();
 	    			long doneCount = issuesList.getIssues().stream().filter(p->p.getFields().
-	    					getStatus().getSprintStatusName().equals("Done")).count();
+	    					getStatus().getIssueStatusName().equals("Done")).count();
 	    			long newCount = issuesList.getIssues().stream().filter(p->p.getFields().
-	    					getStatus().getSprintStatusName().equals("New")).count();
+	    					getStatus().getIssueStatusName().equals("New")).count();
 	    			long approveCount = issuesList.getIssues().stream().filter(p->p.getFields().
-	    					getStatus().getSprintStatusName().equals("Approve")).count();
+	    					getStatus().getIssueStatusName().equals("Approve")).count();
 	    			long reOpenCount = issuesList.getIssues().stream().filter(p->p.getFields().
-	    					getStatus().getSprintStatusName().equals("ReOpened")).count();
+	    					getStatus().getIssueStatusName().equals("ReOpened")).count();
 	    			long closedCount = issuesList.getIssues().stream().filter(p->p.getFields().
-	    					getStatus().getSprintStatusName().equals("Closed")).count();
+	    					getStatus().getIssueStatusName().equals("Closed")).count();
 	    			System.err.println(".....Date>>>>>>>"+startDate.plusDays(4));
 	    			if(startDate.plusDays(4).isEqual(localDate) || startDate.plusDays(4).isAfter(localDate)){
 	    				pi.setWeekOfSprint(1);

@@ -1,6 +1,8 @@
 package com.springmvc.service;
 
+import com.springmvc.model.WebhookEventRequest;
+
 public interface WebHookService {
 
-	String updateIssueNotification();
+	public String updateIssueNotification(WebhookEventRequest eventReqest);
 }

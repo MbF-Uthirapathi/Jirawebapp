@@ -6,14 +6,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
 @Getter
+@Setter
 @JsonIgnoreProperties(ignoreUnknown=true)
-public class SubtaskFields {
-
-	@JsonProperty("id")
-	private String subtaskId;
+public class TimeTrack {
 	
-	@JsonProperty("id")
-	private IssueStatus subtaskStatus;
+	@JsonProperty("remainingEstimate")
+	private String remainTime;
+	
+	@JsonProperty("timeSpent")
+	private String timeSpent;
+	
+	@JsonProperty("originalEstimate")
+	private String originalTime;
 }

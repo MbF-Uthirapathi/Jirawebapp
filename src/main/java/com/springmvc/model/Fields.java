@@ -20,10 +20,15 @@ public class Fields {
 	@JsonProperty("assignee")
 	private Assignee assignee;
 	@JsonProperty("status")
-	private SprintStatus status;
+	private IssueStatus status;
 	@JsonProperty("subtasks")
 	private List<Subtask> subtasks;
+	@JsonProperty("created")
+	private String createdDate;
+	@JsonProperty("summary")
+	private String summary;
 	@JsonProperty("timetracking")
-	private TimeTracking timeTracking;
-	
+	private TimeTrack timeTrack;
+	@JsonProperty("sprint")
+	private Sprint sprint;
 }

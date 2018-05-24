@@ -14,6 +14,9 @@ public class Issue {
 	@JsonProperty("id")
 	private String issueId;
 	
+	@JsonProperty("key")
+	private String issueKey;
+	
 	@JsonProperty("fields")
 	private Fields fields;
 	

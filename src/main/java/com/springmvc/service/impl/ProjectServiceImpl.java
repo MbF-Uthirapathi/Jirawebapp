@@ -73,7 +73,7 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public Set<String> getJiraUsers(List<String> projectList) {
 		Set<String> userNames = new HashSet<>();
-		List<Project> projects = projectRepository.findByProjectNameIn(projectList);
+		List<Project> projects = projectRepository.findByProjectName(projectList);
 		Client client = Client.create();
 		projects.forEach(p->{
 			client.addFilter(new HTTPBasicAuthFilter(p.getEmail(), p.getPassword()));

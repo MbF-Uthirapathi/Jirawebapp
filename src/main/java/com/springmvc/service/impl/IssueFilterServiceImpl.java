@@ -38,7 +38,7 @@ public class IssueFilterServiceImpl implements IssueFilterService {
 		Client client = Client.create();
 		List<IssueFilterList> issueList = new ArrayList<IssueFilterList>();
 
-		List<Project> projectDetails1 = projectRepository.findByProjectNameIn(user.getProjectName());
+		List<Project> projectDetails1 = projectRepository.findByProjectName(user.getProjectName());
 
 	      projectDetails1.stream().forEach(jira1->{	
 	    	
@@ -64,10 +64,10 @@ public class IssueFilterServiceImpl implements IssueFilterService {
 				issue.setIssueType(p.getFields().getIssuetype().getIssuetypename());
 				issue.setSummary(p.getSummary());
 				issue.setAssigneeEmailAdd(p.getFields().getAssignee().getAssigneeEmailAddress());
-				issue.setStatusName(p.getFields().getStatus().getSprintStatusName());
-				issue.setOriginalEstimate(p.getFields().getTimeTracking().getOriginalEstimate());
-				issue.setRemainingEstimate(p.getFields().getTimeTracking().getRemainingEstimate());
-				issue.setTimeSpent(p.getFields().getTimeTracking().getTimeSpent());
+				issue.setStatusName(p.getFields().getStatus().getIssueStatusName());
+				issue.setOriginalEstimate(p.getFields().getTimeTrack().getOriginalTime());
+				issue.setRemainingEstimate(p.getFields().getTimeTrack().getRemainTime());
+				issue.setTimeSpent(p.getFields().getTimeTrack().getTimeSpent());
 				issueList.add(issue);
 			});
 			});		

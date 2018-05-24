@@ -11,4 +11,6 @@ public interface SprintRepository extends JpaRepository<Sprint, Integer>{
 
 	@Query(value = "SELECT COUNT(sprintId) FROM Sprint")
 	public int findCountOfRows();
+	
+	public Sprint findByJiraSprintId(int jiraSprintId);
 }
