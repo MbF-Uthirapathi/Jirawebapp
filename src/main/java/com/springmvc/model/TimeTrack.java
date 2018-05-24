@@ -6,17 +6,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
 @Getter
+@Setter
 @JsonIgnoreProperties(ignoreUnknown=true)
-public class Issue {
+public class TimeTrack {
 	
-	@JsonProperty("id")
-	private String issueId;
+	@JsonProperty("remainingEstimate")
+	private String remainTime;
 	
-	@JsonProperty("key")
-	private String issueKey;
+	@JsonProperty("timeSpent")
+	private String timeSpent;
 	
-	@JsonProperty("fields")
-	private Fields fields;
+	@JsonProperty("originalEstimate")
+	private String originalTime;
 }

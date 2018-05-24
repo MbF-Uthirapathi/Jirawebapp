@@ -15,5 +15,5 @@ public class SubtaskFields {
 	private String subtaskId;
 	
 	@JsonProperty("id")
-	private SprintStatus subtaskStatus;
+	private IssueStatus subtaskStatus;
 }

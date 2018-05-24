@@ -9,8 +9,8 @@ import lombok.Setter;
 @Setter
 @Getter
 @JsonIgnoreProperties(ignoreUnknown=true)
-public class SprintStatus {
+public class IssueStatus {
 
 	@JsonProperty("name")
-	private String sprintStatusName;
+	private String issueStatusName;
 }
