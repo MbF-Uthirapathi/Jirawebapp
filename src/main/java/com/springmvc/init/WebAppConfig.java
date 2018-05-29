@@ -23,7 +23,6 @@ import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 @Configuration
-@EnableScheduling
 @EnableWebMvc
 @EnableTransactionManagement
 @ComponentScan("com.springmvc")
