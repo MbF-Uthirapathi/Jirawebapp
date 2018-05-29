@@ -8,4 +8,6 @@ import com.springmvc.model.JiraRequest;
 public interface IssueService {
 
 	List<String> findIssue(JiraRequest user) throws UnsupportedEncodingException;
+	
+	public void addIssues() throws UnsupportedEncodingException;
 }

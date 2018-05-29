@@ -30,5 +30,7 @@ public class Project {
     private String jiraProjectName;
     
     private String projectStatus;
+    
+    private boolean pullIssues; 
    
 }

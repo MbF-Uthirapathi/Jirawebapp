@@ -35,6 +35,16 @@ public class IssueController {
     public ModelAndView listIssue(JiraRequest user, Model model,HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 		System.err.println(".........."+user.getFromDate());
     	model.addAttribute("jsonList", issueService.findIssue(user));
-        return new ModelAndView("excel");
+        return new ModelAndView("excel");  
     }
+	@RequestMapping(value = "/addissue")
+	public void addingIssue(){
+		try {
+			issueService.addIssues();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		System.out.println("Adding issues");
+	}
 }

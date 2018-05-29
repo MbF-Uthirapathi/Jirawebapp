@@ -15,5 +15,8 @@ public class IssuesList {
 	
 	@JsonProperty("issues")
 	private List<Issue> issues;
+	
+	@JsonProperty("total")
+	private int total;
 
 }
