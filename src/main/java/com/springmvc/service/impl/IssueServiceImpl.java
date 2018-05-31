@@ -9,6 +9,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +33,8 @@ import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
 @Service
 public class IssueServiceImpl implements IssueService {
+	
+	private static final Logger log = LoggerFactory.getLogger(IssueServiceImpl.class);
 
 	@Resource
 	private ProjectRepository projectRepository;
@@ -84,9 +88,9 @@ public class IssueServiceImpl implements IssueService {
 				try {
 					response = webResource.type("application/json").accept("application/json")
 							.get(ClientResponse.class);
-					System.err.println(response.getStatus());
+					log.info("---"+response.getStatus());
 				} catch (Exception e) {
-					System.err.println(e.getMessage() + " for this " + PROJECT);
+					log.info(e.getMessage() + " for this " + PROJECT);
 					e.printStackTrace();
 				}
 				client.destroy();
@@ -100,6 +104,7 @@ public class IssueServiceImpl implements IssueService {
 	}
 
 	@Override
+	//@Scheduled(cron = "0 1 1 * * ?")
 	public void addIssues() throws UnsupportedEncodingException {
 		LocalDate currentdate = LocalDate.now();
 		Client client = Client.create();
@@ -109,14 +114,12 @@ public class IssueServiceImpl implements IssueService {
 			WebResource webResource=null;
 			String url = null;
 			if (!jira1.isPullIssues()) {
-				System.out.println("pulled issues");
+				log.info("pulled issues");
 				url = " <= " + currentdate;
 				jira1.setPullIssues(true);
 				projectRepository.save(jira1);
-				
-
 			} else {
-				System.out.println("today issues updated");
+				log.info("today issues updated");
 				url = "=" + currentdate;
 			}
 			client.addFilter(new HTTPBasicAuthFilter(jira1.getEmail(), jira1.getPassword()));
@@ -125,27 +128,27 @@ public class IssueServiceImpl implements IssueService {
 			try {
 				ecodedValue1 = URLEncoder.encode(url, StandardCharsets.UTF_8.name());
 			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			System.err.println("url........"+jira1.getUrl() + "/rest/api/2/search?filter&jql=" + "created"
-					+ ecodedValue1 + "&maxResults=100");
+
 			webResource = client.resource(jira1.getUrl() + "/rest/api/2/search?filter&jql=" + "created"
 					+ ecodedValue1);
-
-			IssuesList response = webResource.type("application/json").accept("application/json").get(IssuesList.class);
-			System.out.println(response.getTotal());
 			
-			for(int i=0; i<=response.getTotal();i++){
-				System.out.println(".......i"+i+"...");
-				//i=i+1;
+			IssuesList response = webResource.type("application/json").accept("application/json").get(IssuesList.class);
+
+			log.info("List of issues :" +response.getTotal());
+	
+			for(int i=0; i<=response.getTotal();i+=50){
+			
 				webResource = client.resource(jira1.getUrl() + "/rest/api/2/search?filter&jql=" + "created"
-						+ ecodedValue1+"&startAt="+i);
-				System.err.println("url........"+jira1.getUrl() + "/rest/api/2/search?filter&jql=" + "created"
-						+ ecodedValue1+"&startAt="+i);
-				List<Issue> s = response.getIssues();
-				System.err.println("count....."+response.getIssues().stream().count());
+						+ ecodedValue1+"&startAt="+i +"&maxResults=50");
+				
+				IssuesList res = webResource.type("application/json").accept("application/json").get(IssuesList.class);
+ 
+				log.info("jira url for get the list of issues:" +webResource.toString());
+				List<Issue> s = res.getIssues();
+				log.info("Issue count :"+res.getIssues().stream().count());
+			
 				s.forEach(p -> {
 					IssueDetail issue = new IssueDetail();
 					if(p.getFields().getAssignee() !=null){
@@ -173,17 +176,16 @@ public class IssueServiceImpl implements IssueService {
 						issue.setTimeSpent(p.getFields().getTimeTrack().getTimeSpent());
 					}
 					issue.setProject(jira1);
-					
 					issueDetails.add(issue);
-					
 				});
-				i=i+50;
-				//i=i-1;
-				
 			}
-			
 			issueRepository.save(issueDetails);
 		});
+	}
+	
+	//@Scheduled(fixedDelay =5000)
+	public void scheduleTest(){
+		log.info("schedule for every 5 seconds");
 	}
 
 }
